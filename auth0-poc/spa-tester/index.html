@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang=en>
+
+<head>
+    <meta charset=utf-8>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css"
+        integrity="sha512-xiunq9hpKsIcz42zt0o2vCo34xV0j6Ny8hgEylN3XBglZDtTZ2nwnqF/Z/TTCc18sGdvCjbFInNd++6q3J0N6g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <title>Auth0 Proof-of-Concept</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Auth0 Proof-of-Concept</h1>
+
+        <div id="gated-content" class="hidden">
+            <details>
+                <summary>Logged-in user details</summary>
+                <h2>Access token</h2>
+                <pre id="ipt-access-token"></pre>
+                <h2>User profile</h2>
+                <pre id="ipt-user-profile"></pre>
+            </details>
+        </div>
+
+        <button id="btn-login" disabled="true" onclick="login()">log in</button>
+        <button id="btn-logout" disabled="true" onclick="logout()">log out</button>
+
+        <hr>
+
+        <h2>API access</h2>
+
+        <h3>Public Endpoint</h3>
+        <pre id="status-public"></pre>
+
+        <h3>Private Endpoint</h3>
+        <pre id="status-private"></pre>
+
+        <h3>Private Scoped Endpoint</h3>
+        <pre id="status-private-scoped"></pre>
+    </div>
+
+    <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>
