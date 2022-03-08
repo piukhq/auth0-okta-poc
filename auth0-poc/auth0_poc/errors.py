@@ -34,6 +34,11 @@ class InvalidKeyError(AuthError):
     message = "No valid key was found for this token."
 
 
+class InvalidOrgError(AuthError):
+    code = "invalid_org"
+    message = "Organisation ID is not authorised to access this resource."
+
+
 class InsufficientScopesError(AuthError):
     code = "insufficient_scopes"
     message = "Token does not have the required scopes."

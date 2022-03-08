@@ -1,9 +1,9 @@
-from functools import wraps
+from functools import lru_cache, wraps
 from typing import Any, Callable, Mapping, TypeVar, cast
 
-from flask import request, session
-from jose import jwt
 import requests
+from flask import request, g
+from jose import jwt
 
 from auth0_poc import errors
 from settings import settings
@@ -44,6 +44,22 @@ def get_key_for_token(token: str) -> str:
         raise errors.InvalidKeyError from ex
 
 
+@lru_cache
+def get_orgs() -> list[dict]:
+    resp = requests.get(
+        f"{settings.auth0_domain}/api/v2/organizations",
+        headers={"Authorization": f"Bearer {settings.auth0_mgmt_token}"},
+    )
+    resp.raise_for_status()
+    return resp.json()
+
+
+def validate_org_id(org_id: str) -> None:
+    orgs = get_orgs()
+    if not any(org["id"] == org_id for org in orgs):
+        raise errors.InvalidOrgError
+
+
 def get_validated_token_payload(token: str) -> Mapping[str, Any]:
     key = get_key_for_token(token)
 
@@ -61,6 +77,8 @@ def get_validated_token_payload(token: str) -> Mapping[str, Any]:
         raise errors.InvalidClaimsError from ex
     except Exception as ex:
         raise errors.InvalidTokenError from ex
+
+    validate_org_id(payload["org_id"])
 
     return payload
 
@@ -81,7 +99,7 @@ def requires_auth(func: Fn) -> Fn:
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         token = get_token_from_headers()
         payload = get_validated_token_payload(token)
-        session["user"] = payload
+        g.user = payload
         return func(*args, **kwargs)
 
     return cast(Fn, wrapper)

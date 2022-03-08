@@ -5,7 +5,7 @@ const configureClient = async () => {
         domain: "dev-s-2ims9r.eu.auth0.com",
         client_id: "eLDoDIawgDOqaracZz8DuzNkIeykbqzf",
         audience: "https://quickstart/api",
-        scope: "read:mids"
+        scope: "read:mids write:mids"
     })
 }
 
@@ -18,7 +18,10 @@ window.onload = async () => {
     if (isAuthed) return
 
     const query = window.location.search
-    if (query.includes("code=") && query.includes("state=")) {
+    if (query.includes("error=")) {
+        el("error-message").classList.remove("hidden")
+        el("error-message-text").textContent = qsVar("error_description")
+    } else if (query.includes("code=") && query.includes("state=")) {
         await auth0.handleRedirectCallback()
         updateUI()
         window.history.replaceState({}, document.title, "/")
@@ -39,15 +42,15 @@ const updateUI = async () => {
     if (isAuthed) {
         el("gated-content").classList.remove("hidden")
 
-        el("ipt-access-token").textContent = token
-        el("ipt-user-profile").textContent = JSON.stringify(await auth0.getUser(), null, 4)
+        el("access-token").textContent = token
+        el("user-profile").textContent = JSON.stringify(await auth0.getUser(), null, 4)
     } else {
         el("gated-content").classList.add("hidden")
     }
 
     el("status-public").textContent = await fetchEndpoint("/public")
-    el("status-private").textContent = await fetchEndpoint("/private", token)
-    el("status-private-scoped").textContent = await fetchEndpoint("/private-scoped", token)
+    el("status-read-mids").textContent = await fetchEndpoint("/read-mids", token)
+    el("status-write-mids").textContent = await fetchEndpoint("/write-mids", token)
 }
 
 const login = async () => {
@@ -78,4 +81,16 @@ const fetchEndpoint = async (endpoint, token) => {
 
 const el = (id) => {
     return document.getElementById(id)
+}
+
+const qsVar = (variable) => {
+    var query = window.location.search.substring(1)
+    var vars = query.split("&")
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=")
+        if (pair[0] == variable) {
+            return decodeURIComponent(pair[1])
+        }
+    }
+    return false
 }

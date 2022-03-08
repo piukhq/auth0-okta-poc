@@ -25,6 +25,10 @@ mypy = "^0.931"
 pytest = "^7.0.1"
 ptpython = "^3.0.20"
 isort = "^5.10.1"
+types-requests = "^2.27.11"
+
+[tool.isort]
+profile = "black"
 
 [tool.pylint.messages_control]
 disable = [

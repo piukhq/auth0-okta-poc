@@ -24,14 +24,19 @@
             <details>
                 <summary>Logged-in user details</summary>
                 <h2>Access token</h2>
-                <pre id="ipt-access-token"></pre>
+                <pre id="access-token"></pre>
                 <h2>User profile</h2>
-                <pre id="ipt-user-profile"></pre>
+                <pre id="user-profile"></pre>
             </details>
         </div>
 
         <button id="btn-login" disabled="true" onclick="login()">log in</button>
         <button id="btn-logout" disabled="true" onclick="logout()">log out</button>
+
+        <div id="error-message" class="hidden">
+            <h2>Error</h2>
+            <p id="error-message-text"></p>
+        </div>
 
         <hr>
 
@@ -40,11 +45,11 @@
         <h3>Public Endpoint</h3>
         <pre id="status-public"></pre>
 
-        <h3>Private Endpoint</h3>
-        <pre id="status-private"></pre>
+        <h3>Read MIDs Endpoint</h3>
+        <pre id="status-read-mids"></pre>
 
-        <h3>Private Scoped Endpoint</h3>
-        <pre id="status-private-scoped"></pre>
+        <h3>Write MIDs Endpoint</h3>
+        <pre id="status-write-mids"></pre>
     </div>
 
     <script src="https://cdn.auth0.com/js/auth0-spa-js/1.13/auth0-spa-js.production.js"></script>
