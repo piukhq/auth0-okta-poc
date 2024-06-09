@@ -13,7 +13,7 @@ packages = [{include = "okta_poc"}]
 [tool.poetry.dependencies]
 python = "^3.9"
 Flask = "^2.0.3"
-Flask-Cors = "^3.0.10"
+Flask-Cors = "^4.0.1"
 pydantic = "^1.9.0"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 requests = "^2.27.1"
