@@ -20,7 +20,7 @@ requests = "^2.27.1"
 okta-jwt-verifier = "^0.2.3"
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.1.0"
+black = "^24.3.0"
 pylint = "^2.12.2"
 mypy = "^0.931"
 pytest = "^7.0.1"
