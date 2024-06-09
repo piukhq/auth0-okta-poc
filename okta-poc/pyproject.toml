@@ -14,7 +14,7 @@ packages = [{include = "okta_poc"}]
 python = "^3.9"
 Flask = "^2.0.3"
 Flask-Cors = "^3.0.10"
-pydantic = "^1.9.0"
+pydantic = "^1.10.13"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 requests = "^2.27.1"
 okta-jwt-verifier = "^0.2.3"
